@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/turquoise"
+    android:orientation="vertical"
+    tools:context=".RegisterDetailActivity">
+
+    <ImageButton
+        android:id="@+id/goBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#96DED1"
+        android:src="@drawable/baseline_arrow_back_24" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/custom_edittext"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Form Group"
+                android:textAlignment="center"
+                android:textColor="@color/charcoal"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_courseCode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_menu_book_24"
+                android:drawablePadding="8dp"
+                android:hint="Course Code"
+                android:padding="8dp"
+                android:textColor="@color/charcoal" />
+
+            <EditText
+                android:id="@+id/add_groupSize"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_group_24"
+                android:drawablePadding="8dp"
+                android:hint="Group Size"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/charcoal" />
+
+            <EditText
+                android:id="@+id/add_date"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_date_range_24"
+                android:drawablePadding="8dp"
+                android:hint="Completion Date(DD/MM/YYYY)"
+                android:padding="8dp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/charcoal"
+                android:textSize="16sp"
+                android:inputType="date"
+                />
+
+
+            <EditText
+                android:id="@+id/add_introduction"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableLeft="@drawable/baseline_chat_24"
+                android:drawablePadding="8dp"
+                android:gravity="top"
+                android:hint="Introduce your ideas!"
+                android:padding="8dp"
+                android:textColor="@color/charcoal"
+                />
+
+            <Button
+                android:id="@+id/add_submit"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/turquoise"
+                android:text="Create Group"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:indeterminateTint="@color/turquoise"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
