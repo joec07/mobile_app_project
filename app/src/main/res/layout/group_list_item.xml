@@ -21,13 +21,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Course Code: "
-            android:textColor="@color/charcoal" />
+            android:textColor="@color/charcoal"
+            android:drawableLeft="@drawable/baseline_menu_book_24_black"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:textSize="14sp"
+            />
 
         <TextView
             android:id="@+id/group_courseCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/charcoal"
+            android:textSize="18sp"
             android:textStyle="bold"
 
             />
@@ -37,7 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/textView2"
@@ -45,15 +52,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Group Size:"
-            android:textColor="@color/charcoal" />
+            android:textColor="@color/charcoal"
+            android:drawableLeft="@drawable/baseline_group_24_black"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:textSize="14sp"
+            />
 
         <TextView
             android:id="@+id/group_maxNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceListItem"
             android:textColor="@color/charcoal"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,14 +80,22 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Idea:"
-            android:textColor="@color/charcoal" />
+            android:textColor="@color/charcoal"
+            android:drawableLeft="@drawable/baseline_lightbulb_24_black"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:textSize="14sp"
+            />
 
         <TextView
             android:id="@+id/group_idea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/charcoal" />
+            android:textColor="@color/charcoal"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -90,7 +110,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Creator:"
-            android:textColor="@color/charcoal" />
+            android:textColor="@color/charcoal"
+            android:drawableLeft="@drawable/baseline_person_24_black"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:textSize="14sp"
+            />
 
         <TextView
             android:id="@+id/group_creatorInfo"
@@ -98,7 +123,71 @@
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textColor="@color/charcoal"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Creator Major:"
+            android:textColor="@color/charcoal"
+            android:drawableLeft="@drawable/baseline_create_24_black"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/group_creatorMajor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/charcoal"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Creator Introduction:"
+            android:textColor="@color/charcoal"
+            android:drawableLeft="@drawable/baseline_chat_24_black"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/group_creatorIntroduction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/charcoal"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
 
     </LinearLayout>
 
@@ -109,6 +198,7 @@
         android:layout_weight="1"
         android:gravity="end"
         android:text="TextView"
-        android:textColor="@color/charcoal" />
+        android:textColor="@color/charcoal"
+        android:textSize="14sp" />
 
 </LinearLayout>

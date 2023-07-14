@@ -8,12 +8,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -24,7 +28,9 @@ import com.example.comp7506_testing.Model.UserForGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -37,10 +43,10 @@ public class HomeActivity extends AppCompatActivity {
     private ApiInterface apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
     private EditText searchBar;
     private Group[] groupList;
-    private ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
     private ListView groupListView;
     private ProgressBar progressBar;
     private Context context = this;
+    private ArrayList<Map<String, Object>> AllGroupList = new ArrayList<Map<String, Object>>();
 
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -57,12 +63,46 @@ public class HomeActivity extends AppCompatActivity {
         groupListView = findViewById(R.id.homeListView);
         progressBar = findViewById(R.id.progressBar);
 
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                String text = editable.toString();
+
+
+                // no text -> show all group
+                if (text.trim().length() == 0){
+                    setListView(AllGroupList);
+                    return;
+                }
+
+                List<Group> FilteredGroupList = new ArrayList<>();
+
+                ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+                for (Group group : groupList) {
+                    if (group.getCourseCode().toLowerCase().contains(text.toLowerCase())) {
+                        FilteredGroupList.add(group);
+                    }
+                }
+
+                processGroupList(FilteredGroupList, false);
+
+            }
+        });
+
+
         addGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getBaseContext(), AddGroupActivity.class));
             }
         });
+
 
         Call<Group[]> call = apiInterface.getGroup();
         call.enqueue(new Callback<Group[]>() {
@@ -73,26 +113,9 @@ public class HomeActivity extends AppCompatActivity {
                     Toast.makeText(HomeActivity.this, "Error: please try again later", Toast.LENGTH_SHORT).show();
                 }else if (response.code() == 200){
                     groupList = response.body();
+                    List<Group> GroupListArrList = Arrays.asList(groupList);
                     System.out.println("groupList: " + groupList);
-                    for (int i = 0; i < groupList.length; i++) {
-                        Group currentGp = groupList[i];
-                        UserForGroup creator = currentGp.getCreator();
-                        Map<String, Object> map = new HashMap<String, Object>();
-                        map.put("courseCode", currentGp.getCourseCode());
-                        map.put("maxNum", currentGp.getMaxNum());
-                        map.put("idea", currentGp.getIntroduction());
-                        map.put("creatorInfo", creator.getName() + "\nMajor: " + creator.getMajor() + "\nIntroduction: " + creator.getIntroduction() + "\nEmail: " + creator.getEmail());
-                        map.put("creatAt", new SimpleDateFormat("dd-MM-yyyy").format(currentGp.getCreateAt()));
-                        list.add(map);
-                    }
-
-                    SimpleAdapter adapter = new SimpleAdapter(context,
-                            list,  // array list
-                            R.layout.group_list_item, // layout file
-                            new String[]{"courseCode", "maxNum", "idea", "creatorInfo", "creatAt"}, // key in the array list
-                            new int[]{R.id.group_courseCode, R.id.group_maxNum, R.id.group_idea, R.id.group_creatorInfo, R.id.group_createAt} ); // id of the textview
-
-                    groupListView.setAdapter(adapter);
+                    processGroupList(GroupListArrList, true);
                     progressBar.setVisibility(View.GONE);
                     groupListView.setVisibility(View.VISIBLE);
 
@@ -110,6 +133,43 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private void processGroupList(List<Group> updatedGrouplist, boolean isFirstTime){
+        ArrayList<Map<String, Object>> list;
+        // first time -> initialize AllGroupList (list: point the memory location of AllGroupList -> all updates would be applied to AllGroupList)
+        if (isFirstTime){
+            list = AllGroupList;
+        }else{
+            list = new ArrayList<Map<String, Object>>();
+        }
+
+        for (int i = 0; i < updatedGrouplist.size(); i++) {
+            Group currentGp = updatedGrouplist.get(i);
+            UserForGroup creator = currentGp.getCreator();
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("courseCode", currentGp.getCourseCode());
+            map.put("maxNum", currentGp.getMaxNum());
+            map.put("idea", currentGp.getIntroduction());
+            map.put("creatorInfo", creator.getName() + " (" + creator.getEmail() + ")");
+            map.put("creatAt", new SimpleDateFormat("dd-MM-yyyy").format(currentGp.getCreateAt()));
+            map.put("major", creator.getMajor());
+            map.put("introduction",creator.getIntroduction());
+            list.add(map);
+        }
+
+        setListView(list);
+    }
+
+    private void setListView(ArrayList<Map<String, Object>> list){
+        SimpleAdapter adapter = new SimpleAdapter(context,
+                list,  // array list
+                R.layout.group_list_item, // layout file
+                new String[]{"courseCode", "maxNum", "idea", "creatorInfo", "creatAt", "major", "introduction"}, // key in the array list
+                new int[]{R.id.group_courseCode, R.id.group_maxNum, R.id.group_idea, R.id.group_creatorInfo, R.id.group_createAt, R.id.group_creatorMajor, R.id.group_creatorIntroduction} ); // id of the textview
+
+        groupListView.setAdapter(adapter);
     }
 
     private void logout(){

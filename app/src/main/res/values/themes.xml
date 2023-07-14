@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.COMP7506_testing" parent="Base.Theme.COMP7506_testing" />
+
+    <style name="HomeEditTextTheme" parent="Base.Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+
 </resources>

@@ -28,6 +28,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,6 +50,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("userData", 0);
+
+        // if the cookie does not expire, go to home page directly
+//        if (new Date(sharedPreferences.getString("cookie", "").split(";")[2].split("=")[1]).compareTo(new Date()) == 1){
+//            startActivity(new Intent(getBaseContext(), HomeActivity.class));
+//        }
+
         setContentView(R.layout.activity_login);
 
         auth = FirebaseAuth.getInstance();
