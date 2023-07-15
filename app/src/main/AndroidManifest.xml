@@ -15,6 +15,12 @@
         android:theme="@style/Theme.COMP7506_testing"
         tools:targetApi="31">
         <activity
+            android:name=".AccountUpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AcccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddGroupActivity"
             android:exported="false" />
         <activity

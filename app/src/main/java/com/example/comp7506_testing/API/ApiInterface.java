@@ -20,8 +20,14 @@ public interface ApiInterface {
     @POST("/user/login")
     Call<User> postLogin(@Body User user);
 
-    @POST("/user/updateInfo")
+    @POST("/user/submitInfo")
+    Call<User> postSubmitInfo(@Body User user, @Header("Cookie") String cookie);
+
+    @POST("/user/updateUserInfo")
     Call<User> postUpdateInfo(@Body User user, @Header("Cookie") String cookie);
+
+    @POST("/user/logout")
+    Call<String> postLogout(@Header("Cookie") String cookie);
 
     @POST("/group/addGroup")
     Call<User> postAddGroup(@Body Group group, @Header("Cookie") String cookie);

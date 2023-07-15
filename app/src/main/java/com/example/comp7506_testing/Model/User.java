@@ -39,12 +39,20 @@ public class User implements Serializable {
         return user;
     }
 
-    public static User updateInfo(String name, String major, String introduction, String email){
+    public static User submitInfo(String name, String major, String introduction, String email){
         User user = new User();
         user.setName(name);
         user.setMajor(major);
         user.setIntroduction(introduction);
         user.setEmail(email);
+        return user;
+    }
+
+    public static User updateInfo(String name, String major, String introduction){
+        User user = new User();
+        user.setName(name);
+        user.setMajor(major);
+        user.setIntroduction(introduction);
         return user;
     }
 

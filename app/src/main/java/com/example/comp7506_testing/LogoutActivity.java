@@ -18,7 +18,7 @@ public class LogoutActivity extends AppCompatActivity {
 
         System.out.println("logout");
 
-        logoutButton = findViewById(R.id.logout);
+        logoutButton = findViewById(R.id.logout_button);
 
         logoutButton.setOnClickListener(new View.OnClickListener(){
             @Override

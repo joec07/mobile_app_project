@@ -98,6 +98,7 @@ public class AddGroupActivity extends AppCompatActivity {
                     }else if (response.code() == 200){
                         sharedPreferences.edit().putString("user", new Gson().toJson(response.body())).apply();
                         startActivity(new Intent(getBaseContext(), HomeActivity.class));
+                        finish();
                     }
 
                 }

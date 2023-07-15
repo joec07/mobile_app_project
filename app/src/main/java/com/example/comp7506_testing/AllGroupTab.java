@@ -123,6 +123,7 @@ public class AllGroupTab extends Fragment {
                     processGroupList(GroupListArrList, true);
                     progressBar.setVisibility(View.GONE);
                     groupListView.setVisibility(View.VISIBLE);
+                    System.out.println("GroupList: " + groupList.length);
 
                 }
 
@@ -164,6 +165,8 @@ public class AllGroupTab extends Fragment {
             map.put("introduction",creator.getIntroduction());
             list.add(map);
         }
+
+        System.out.println("list: " + list);
 
         setListView(list);
     }

@@ -54,9 +54,9 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("userData", 0);
 
         // if the cookie does not expire, go to home page directly
-//        if (new Date(sharedPreferences.getString("cookie", "").split(";")[2].split("=")[1]).compareTo(new Date()) == 1){
-//            startActivity(new Intent(getBaseContext(), HomeActivity.class));
-//        }
+        if (sharedPreferences.getString("cookie", "").length() > 0 && new Date(sharedPreferences.getString("cookie", "").split(";")[2].split("=")[1]).compareTo(new Date()) == 1){
+            startActivity(new Intent(getBaseContext(), HomeActivity.class));
+        }
 
         setContentView(R.layout.activity_login);
 
@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         intent = new Intent(getBaseContext(), HomeActivity.class);
                                                     }
                                                     startActivity(intent);
+                                                    finish();
                                                 }
 
 
@@ -115,9 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                                             }
                                         });
 
-//                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-//                                        startActivity(new Intent(LoginActivity.this, LogoutActivity.class));
-//                                        finish();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override

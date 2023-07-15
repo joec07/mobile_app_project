@@ -12,4 +12,8 @@
         <item name="colorAccent">@color/white</item>
     </style>
 
+    <style name="TabLayoutStyle" parent="Base.Widget.Design.TabLayout">
+        <item name="android:textSize">16dp</item>
+    </style>
+
 </resources>

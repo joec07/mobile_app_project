@@ -62,7 +62,7 @@ public class RegisterDetailActivity extends AppCompatActivity {
             return;
         }
         SharedPreferences sharedPreferences = getSharedPreferences("userData", 0);
-        Call<User> call = apiInterface.postUpdateInfo(User.updateInfo(name, major, intro, getIntent().getStringExtra("email")), sharedPreferences.getString("cookie", ""));
+        Call<User> call = apiInterface.postSubmitInfo(User.submitInfo(name, major, intro, getIntent().getStringExtra("email")), sharedPreferences.getString("cookie", ""));
         signupDetailsSubmitButton.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -75,6 +75,7 @@ public class RegisterDetailActivity extends AppCompatActivity {
                 }else if (response.code() == 200){
                     sharedPreferences.edit().putString("user", new Gson().toJson(response.body())).apply();;
                     startActivity( new Intent(getBaseContext(), HomeActivity.class));
+                    finish();
                 }
                 progressBar.setVisibility(View.GONE);
                 signupDetailsSubmitButton.setVisibility(View.VISIBLE);
