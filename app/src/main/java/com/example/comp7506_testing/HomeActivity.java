@@ -3,6 +3,7 @@ package com.example.comp7506_testing;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,12 +20,14 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.example.comp7506_testing.API.ApiInterface;
 import com.example.comp7506_testing.API.RetrofitClient;
 import com.example.comp7506_testing.Model.Group;
 import com.example.comp7506_testing.Model.UserForGroup;
+import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,14 +42,12 @@ import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ImageButton userInfo, addGroup;
-    private ApiInterface apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
-    private EditText searchBar;
-    private Group[] groupList;
-    private ListView groupListView;
-    private ProgressBar progressBar;
-    private Context context = this;
+    private ImageButton userInfo;
+
     private ArrayList<Map<String, Object>> AllGroupList = new ArrayList<Map<String, Object>>();
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private ViewPagerAdapter viewPagerAdapter;
 
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -58,118 +59,35 @@ public class HomeActivity extends AppCompatActivity {
 //        System.out.println("user passed: " + user);
 
         userInfo = findViewById(R.id.userInfo);
-        addGroup = findViewById(R.id.addGroup);
-        searchBar = findViewById(R.id.searchBar);
-        groupListView = findViewById(R.id.homeListView);
-        progressBar = findViewById(R.id.progressBar);
-
-        searchBar.addTextChangedListener(new TextWatcher() {
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager2 = findViewById(R.id.viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPager2.setAdapter(viewPagerAdapter);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
+
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
             @Override
-            public void afterTextChanged(Editable editable) {
-
-                String text = editable.toString();
-
-
-                // no text -> show all group
-                if (text.trim().length() == 0){
-                    setListView(AllGroupList);
-                    return;
-                }
-
-                List<Group> FilteredGroupList = new ArrayList<>();
-
-                ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-                for (Group group : groupList) {
-                    if (group.getCourseCode().toLowerCase().contains(text.toLowerCase())) {
-                        FilteredGroupList.add(group);
-                    }
-                }
-
-                processGroupList(FilteredGroupList, false);
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
 
-
-        addGroup.setOnClickListener(new View.OnClickListener() {
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), AddGroupActivity.class));
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tabLayout.getTabAt(position).select();
             }
         });
 
-
-        Call<Group[]> call = apiInterface.getGroup();
-        call.enqueue(new Callback<Group[]>() {
-            @Override
-            public void onResponse(Call<Group[]> call, Response<Group[]> response) {
-                Log.e(TAG, "onResponse: " + response.code());
-                if (response.code() == 404){
-                    Toast.makeText(HomeActivity.this, "Error: please try again later", Toast.LENGTH_SHORT).show();
-                }else if (response.code() == 200){
-                    groupList = response.body();
-                    List<Group> GroupListArrList = Arrays.asList(groupList);
-                    System.out.println("groupList: " + groupList);
-                    processGroupList(GroupListArrList, true);
-                    progressBar.setVisibility(View.GONE);
-                    groupListView.setVisibility(View.VISIBLE);
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Group[]> call, Throwable t) {
-                Toast.makeText(HomeActivity.this, "Error: "+ t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
-
-
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private void processGroupList(List<Group> updatedGrouplist, boolean isFirstTime){
-        ArrayList<Map<String, Object>> list;
-        // first time -> initialize AllGroupList (list: point the memory location of AllGroupList -> all updates would be applied to AllGroupList)
-        if (isFirstTime){
-            list = AllGroupList;
-        }else{
-            list = new ArrayList<Map<String, Object>>();
-        }
-
-        for (int i = 0; i < updatedGrouplist.size(); i++) {
-            Group currentGp = updatedGrouplist.get(i);
-            UserForGroup creator = currentGp.getCreator();
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("courseCode", currentGp.getCourseCode());
-            map.put("maxNum", currentGp.getMaxNum());
-            map.put("idea", currentGp.getIntroduction());
-            map.put("creatorInfo", creator.getName() + " (" + creator.getEmail() + ")");
-            map.put("creatAt", new SimpleDateFormat("dd-MM-yyyy").format(currentGp.getCreateAt()));
-            map.put("major", creator.getMajor());
-            map.put("introduction",creator.getIntroduction());
-            list.add(map);
-        }
-
-        setListView(list);
-    }
-
-    private void setListView(ArrayList<Map<String, Object>> list){
-        SimpleAdapter adapter = new SimpleAdapter(context,
-                list,  // array list
-                R.layout.group_list_item, // layout file
-                new String[]{"courseCode", "maxNum", "idea", "creatorInfo", "creatAt", "major", "introduction"}, // key in the array list
-                new int[]{R.id.group_courseCode, R.id.group_maxNum, R.id.group_idea, R.id.group_creatorInfo, R.id.group_createAt, R.id.group_creatorMajor, R.id.group_creatorIntroduction} ); // id of the textview
-
-        groupListView.setAdapter(adapter);
     }
 
     private void logout(){

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.comp7506_testing.API.ApiInterface;
 import com.example.comp7506_testing.API.RetrofitClient;
 import com.example.comp7506_testing.Model.User;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,9 +73,8 @@ public class RegisterDetailActivity extends AppCompatActivity {
                 if (response.code() == 400){
                     Toast.makeText(RegisterDetailActivity.this, "Invalid information", Toast.LENGTH_SHORT).show();
                 }else if (response.code() == 200){
-                    Intent intent = new Intent(getBaseContext(), HomeActivity.class);
-                    intent.putExtra("user", response.body());
-                    startActivity(intent);
+                    sharedPreferences.edit().putString("user", new Gson().toJson(response.body())).apply();;
+                    startActivity( new Intent(getBaseContext(), HomeActivity.class));
                 }
                 progressBar.setVisibility(View.GONE);
                 signupDetailsSubmitButton.setVisibility(View.VISIBLE);
