@@ -11,7 +11,7 @@ public class User implements Serializable {
     private String major;
     private String name;
     private String email;
-    private GroupForUser[] group;
+    private String[] group;
     private int[] rating;
     private int[] ratingGiven;
 
@@ -59,8 +59,6 @@ public class User implements Serializable {
     public String getFirebaseID() {
         return firebaseID;
     }
-
-
     public String getId() {
         return _id;
     }
@@ -81,7 +79,7 @@ public class User implements Serializable {
         return name;
     }
 
-    public GroupForUser[] getGroup() {
+    public String[] getGroup() {
         return group;
     }
 

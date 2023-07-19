@@ -1,15 +1,26 @@
 package com.example.comp7506_testing.Model;
 
-public class UserForGroup {
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class UserForGroup implements Serializable {
 
     private String introduction;
     private String major;
     private String name;
     private int[] rating;
     private int[] ratingGiven;
-
     private String email;
+    private String _id;
 
+    public UserForGroup(){
+
+    }
+
+
+    public String get_id() {
+        return _id;
+    }
     public String getIntroduction() {
         return introduction;
     }
@@ -32,5 +43,18 @@ public class UserForGroup {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public String toString() {
+        return "UserForGroup{" +
+                "introduction='" + introduction + '\'' +
+                ", major='" + major + '\'' +
+                ", name='" + name + '\'' +
+                ", rating=" + Arrays.toString(rating) +
+                ", ratingGiven=" + Arrays.toString(ratingGiven) +
+                ", email='" + email + '\'' +
+                ", _id='" + _id + '\'' +
+                '}';
     }
 }

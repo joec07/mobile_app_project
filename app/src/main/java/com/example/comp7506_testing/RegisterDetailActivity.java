@@ -62,7 +62,7 @@ public class RegisterDetailActivity extends AppCompatActivity {
             return;
         }
         SharedPreferences sharedPreferences = getSharedPreferences("userData", 0);
-        Call<User> call = apiInterface.postSubmitInfo(User.submitInfo(name, major, intro, getIntent().getStringExtra("email")), sharedPreferences.getString("cookie", ""));
+        Call<User> call = apiInterface.postSubmitInfo(User.submitInfo(name, major, intro, sharedPreferences.getString("email", "")), sharedPreferences.getString("cookie", ""));
         signupDetailsSubmitButton.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
 

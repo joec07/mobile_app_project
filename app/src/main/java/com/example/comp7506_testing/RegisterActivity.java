@@ -79,8 +79,9 @@ public class RegisterActivity extends AppCompatActivity {
                                             Toast.makeText(RegisterActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                             finish();
-
                                         }
+                                        progressBar.setVisibility(View.GONE);
+                                        signupButton.setVisibility(View.VISIBLE);
                                     }
 
                                     @Override
@@ -89,13 +90,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     }
                                 });
 
+
                             } else {
+                                progressBar.setVisibility(View.GONE);
+                                signupButton.setVisibility(View.VISIBLE);
                                 Toast.makeText(RegisterActivity.this, "SignUp Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                            signupEmail.getText().clear();
-                            signupPassword.getText().clear();
-                            progressBar.setVisibility(View.GONE);
-                            signupButton.setVisibility(View.VISIBLE);
+
                         }
                     });
                 }

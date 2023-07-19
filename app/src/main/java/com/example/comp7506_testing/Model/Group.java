@@ -1,9 +1,10 @@
 package com.example.comp7506_testing.Model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Group {
+public class Group implements Serializable {
 
     private String _id;
     private String courseCode;
@@ -12,7 +13,6 @@ public class Group {
     private Date completionDate;
     private UserForGroup creator;
     private UserForGroup[] list;
-
     private Date createAt;
 
     public Group(){
@@ -25,6 +25,12 @@ public class Group {
         group.setIntroduction(introduction);
         group.setMaxNum(maxNum);
         group.setCompletionDate(completionDate);
+        return group;
+    }
+
+    public static Group joinOrQuitGroup(String id){
+        Group group = new Group();
+        group.set_id(id);
         return group;
     }
 
@@ -74,6 +80,10 @@ public class Group {
 
     public void setCompletionDate(Date completionDate) {
         this.completionDate = completionDate;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     @Override

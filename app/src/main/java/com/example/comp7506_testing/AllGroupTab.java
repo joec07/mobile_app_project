@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -70,6 +71,17 @@ public class AllGroupTab extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", 0);
         user = new Gson().fromJson(sharedPreferences.getString("user", ""), User.class);
 
+        groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Map<String, Object> map = (Map<String, Object>) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(getActivity(), GroupDetailActivity.class);
+                intent.putExtra("group", (Group) map.get("detail"));
+                System.out.println("PASSED BEFORE: " + (Group) map.get("detail"));
+                startActivity(intent);
+            }
+        });
+
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -109,7 +121,7 @@ public class AllGroupTab extends Fragment {
             }
         });
 
-        Call<Group[]> call = apiInterface.getGroup();
+        Call<Group[]> call = apiInterface.getGroup(sharedPreferences.getString("cookie", ""));
         call.enqueue(new Callback<Group[]>() {
             @Override
             public void onResponse(Call<Group[]> call, Response<Group[]> response) {
@@ -119,11 +131,13 @@ public class AllGroupTab extends Fragment {
                 }else if (response.code() == 200){
                     groupList = response.body();
                     List<Group> GroupListArrList = Arrays.asList(groupList);
-                    System.out.println("groupList: " + groupList);
+                    sharedPreferences.edit().putString("group", new Gson().toJson(GroupListArrList)).apply();
                     processGroupList(GroupListArrList, true);
                     progressBar.setVisibility(View.GONE);
                     groupListView.setVisibility(View.VISIBLE);
-                    System.out.println("GroupList: " + groupList.length);
+                    for(Group gp: GroupListArrList){
+                        System.out.println("GP: " + gp);
+                    }
 
                 }
 
@@ -153,16 +167,15 @@ public class AllGroupTab extends Fragment {
             UserForGroup creator = currentGp.getCreator();
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("courseCode", currentGp.getCourseCode());
-            map.put("maxNum", currentGp.getMaxNum());
+            map.put("maxNum", "" + (currentGp.getList().length + 1) + "/" + currentGp.getMaxNum());
             map.put("idea", currentGp.getIntroduction());
             if (user.getEmail().compareTo(creator.getEmail()) == 0){
                 map.put("creatorInfo", "You");
             }else {
                 map.put("creatorInfo", creator.getName() + " (" + creator.getEmail() + ")");
             }
-            map.put("creatAt", new SimpleDateFormat("dd-MM-yyyy").format(currentGp.getCreateAt()));
-            map.put("major", creator.getMajor());
-            map.put("introduction",creator.getIntroduction());
+            map.put("createAt", new SimpleDateFormat("dd-MM-yyyy").format(currentGp.getCreateAt()));
+            map.put("detail", currentGp);
             list.add(map);
         }
 
@@ -175,8 +188,8 @@ public class AllGroupTab extends Fragment {
         SimpleAdapter adapter = new SimpleAdapter(context,
                 list,  // array list
                 R.layout.group_list_item, // layout file
-                new String[]{"courseCode", "maxNum", "idea", "creatorInfo", "creatAt", "major", "introduction"}, // key in the array list
-                new int[]{R.id.group_courseCode, R.id.group_maxNum, R.id.group_idea, R.id.group_creatorInfo, R.id.group_createAt, R.id.group_creatorMajor, R.id.group_creatorIntroduction} ); // id of the textview
+                new String[]{"courseCode", "maxNum", "idea", "creatorInfo", "createAt"}, // key in the array list
+                new int[]{R.id.group_courseCode, R.id.group_maxNum, R.id.group_idea, R.id.group_creatorInfo, R.id.group_createAt} ); // id of the textview
 
         groupListView.setAdapter(adapter);
     }

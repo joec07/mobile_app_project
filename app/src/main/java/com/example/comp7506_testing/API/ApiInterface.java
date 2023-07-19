@@ -33,6 +33,13 @@ public interface ApiInterface {
     Call<User> postAddGroup(@Body Group group, @Header("Cookie") String cookie);
 
     @GET("/group/getGroup")
-    Call<Group[]> getGroup();
+    Call<Group[]> getGroup(@Header("Cookie") String cookie);
+
+    @POST("/group/joinGroup")
+    Call<User> postJoinGroup(@Body Group group, @Header("Cookie") String cookie);
+
+    @POST("/group/quitGroup")
+    Call<User> postQuitGroup(@Body Group group, @Header("Cookie") String cookie);
+
 
 }

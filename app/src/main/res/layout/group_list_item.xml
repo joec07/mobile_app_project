@@ -140,47 +140,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Creator Major:"
+            android:text="Create At:"
             android:textColor="@color/charcoal"
-            android:drawableLeft="@drawable/baseline_create_24_black"
+            android:drawableLeft="@drawable/baseline_access_time_24"
             android:gravity="center"
             android:drawablePadding="8dp"
             android:textSize="14sp"
             />
 
         <TextView
-            android:id="@+id/group_creatorMajor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:textColor="@color/charcoal"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Creator Introduction:"
-            android:textColor="@color/charcoal"
-            android:drawableLeft="@drawable/baseline_chat_24_black"
-            android:gravity="center"
-            android:drawablePadding="8dp"
-            android:textSize="14sp"
-            />
-
-        <TextView
-            android:id="@+id/group_creatorIntroduction"
+            android:id="@+id/group_createAt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceListItem"
@@ -192,13 +161,15 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/group_createAt"
+        android:id="@+id/right_arrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="end"
-        android:text="TextView"
         android:textColor="@color/charcoal"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:drawableRight="@drawable/baseline_keyboard_arrow_right_30"
+        android:drawablePadding="20dp"
+        />
 
 </LinearLayout>

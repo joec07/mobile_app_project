@@ -1,8 +1,10 @@
 package com.example.comp7506_testing.Model;
 
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 
-public class GroupForUser {
+public class GroupForUser implements Serializable{
     private String _id;
     private String courseCode;
     private String introduction;
@@ -11,6 +13,10 @@ public class GroupForUser {
     private String creator;
     private User[] list;
     private Date createAt;
+
+    public GroupForUser(){
+
+    }
 
     public String get_id() {
         return _id;
@@ -42,5 +48,19 @@ public class GroupForUser {
 
     public Date getCreateAt() {
         return createAt;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupForUser{" +
+                "_id='" + _id + '\'' +
+                ", courseCode='" + courseCode + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", maxNum=" + maxNum +
+                ", completionDate=" + completionDate +
+                ", creator='" + creator + '\'' +
+                ", list=" + Arrays.toString(list) +
+                ", createAt=" + createAt +
+                '}';
     }
 }

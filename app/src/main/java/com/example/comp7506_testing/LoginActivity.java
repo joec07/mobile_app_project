@@ -53,9 +53,15 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("userData", 0);
 
-        // if the cookie does not expire, go to home page directly
+        // The cookie does not expire -> go to home page directly if the user has submitted 'user details' form. If not, go to 'user details' page.
         if (sharedPreferences.getString("cookie", "").length() > 0 && new Date(sharedPreferences.getString("cookie", "").split(";")[2].split("=")[1]).compareTo(new Date()) == 1){
-            startActivity(new Intent(getBaseContext(), HomeActivity.class));
+            User user = new Gson().fromJson(sharedPreferences.getString("user", ""), User.class);
+            if(user.getIntroduction().compareTo("") == 0){
+                startActivity(new Intent(getBaseContext(), RegisterDetailActivity.class));
+            }else{
+                startActivity(new Intent(getBaseContext(), HomeActivity.class));
+            }
+
         }
 
         setContentView(R.layout.activity_login);
@@ -96,13 +102,13 @@ public class LoginActivity extends AppCompatActivity {
                                                     sharedPreferences.edit().putString("cookie", response.headers().get("set-cookie")).apply();
                                                     Intent intent;
                                                     if (response.body().getIntroduction().compareTo("") == 0){
+                                                        sharedPreferences.edit().putString("email", email).apply();
                                                         intent = new Intent(getBaseContext(), RegisterDetailActivity.class);
-                                                        intent.putExtra("email", email);
 
                                                     }else {
-                                                        sharedPreferences.edit().putString("user", new Gson().toJson(response.body())).apply();
                                                         intent = new Intent(getBaseContext(), HomeActivity.class);
                                                     }
+                                                    sharedPreferences.edit().putString("user", new Gson().toJson(response.body())).apply();
                                                     startActivity(intent);
                                                     finish();
                                                 }
@@ -112,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                             @Override
                                             public void onFailure(Call<User> call, Throwable t) {
-                                                Toast.makeText(LoginActivity.this, "Login Failed" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "Login Failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -122,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                                     public void onFailure(@NonNull Exception e) {
                                         progressBar.setVisibility(View.GONE);
                                         loginButton.setVisibility(View.VISIBLE);
-                                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "Login Failed: " + e.getMessage() , Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     } else {
