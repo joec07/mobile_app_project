@@ -235,6 +235,19 @@
                     app:cornerRadius="20dp" />
 
                 <Button
+                    android:id="@+id/evaluation_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="#73D56C"
+                    android:drawableLeft="@drawable/baseline_create_24"
+                    android:text="Peer Evaluation"
+                    android:textSize="18sp"
+                    android:visibility="gone"
+                    app:cornerRadius="20dp" />
+
+                <Button
                     android:id="@+id/quit_button"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"

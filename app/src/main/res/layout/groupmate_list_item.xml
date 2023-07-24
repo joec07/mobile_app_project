@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/custom_group_item_bg"
+    android:layout_margin="20dp"
+    android:padding="20dp" >
+
+    <TextView
+        android:id="@+id/peerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_person_24"
+        android:drawablePadding="8dp"
+        android:gravity="top"
+        android:text="Name"
+        android:padding="8dp"
+        android:textColor="@color/charcoal"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/peerRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_rating_star_24"
+        android:drawablePadding="8dp"
+        android:gravity="top"
+        android:text="-- / 5.0"
+        android:padding="8dp"
+        android:textColor="@color/charcoal"
+        android:textSize="20dp" />
+
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.comp7506_testing.API;
 
 import com.example.comp7506_testing.Model.Group;
+import com.example.comp7506_testing.Model.RatingForm;
 import com.example.comp7506_testing.Model.User;
 
 import retrofit2.Call;
@@ -41,5 +42,7 @@ public interface ApiInterface {
     @POST("/group/quitGroup")
     Call<User> postQuitGroup(@Body Group group, @Header("Cookie") String cookie);
 
+    @POST("/rating/submitRating")
+    Call<User> postSubmitRating(@Body RatingForm form, @Header("Cookie") String cookie);
 
 }

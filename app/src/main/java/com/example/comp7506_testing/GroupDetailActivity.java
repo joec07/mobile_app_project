@@ -30,9 +30,11 @@ import com.example.comp7506_testing.Model.UserForGroup;
 import com.example.comp7506_testing.R;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,14 +47,12 @@ public class GroupDetailActivity extends AppCompatActivity {
 
     private TextView courseCode, groupSize, idea, createAt, creator, noMemberText;
     private ListView memberList;
-    private Button joinButton, quitButton, notificationButton;
-
+    private Button joinButton, quitButton, notificationButton, evaluation_Button;
     private ApiInterface apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
     private ProgressBar progressBar;
     private User user;
     private Context context = this;
     private ImageButton goBack;
-
     private LinearLayout creatorLayout;
 
 
@@ -82,6 +82,7 @@ public class GroupDetailActivity extends AppCompatActivity {
         noMemberText = findViewById(R.id.noMemberText);
         quitButton = findViewById(R.id.quit_button);
         notificationButton = findViewById(R.id.notification_button);
+        evaluation_Button = findViewById(R.id.evaluation_button);
 
 
         courseCode.setText(group.getCourseCode());
@@ -96,23 +97,36 @@ public class GroupDetailActivity extends AppCompatActivity {
         }
 
 
+        // --------------------------------------  hide join/quit button after completion date -----------------------------
+
         // if the creator is the user
         if (group.getCreator().get_id().compareTo(user.getId()) == 0) {
-            joinButton.setVisibility(View.GONE);
-            notificationButton.setVisibility(View.VISIBLE);
+            if(group.getCompletionDate().compareTo(new Date()) == -1){
+                evaluation_Button.setVisibility(View.VISIBLE);
+                joinButton.setVisibility(View.GONE);
+            }else{
+                joinButton.setVisibility(View.GONE);
+                notificationButton.setVisibility(View.VISIBLE);
+            }
         }else {
             // check if the user is in the group. If yes, show quit button. Otherwise, show join button.
             boolean isInGroup = false;
             for (String groupID : user.getGroup()) {
                 if (groupID.compareTo(group.get_id()) == 0) {
-                    quitButton.setVisibility(View.VISIBLE);
-                    joinButton.setVisibility(View.GONE);
+                    if(group.getCompletionDate().compareTo(new Date()) == -1){
+                        evaluation_Button.setVisibility(View.VISIBLE);
+                        joinButton.setVisibility(View.GONE);
+                    }else{
+                        quitButton.setVisibility(View.VISIBLE);
+                        joinButton.setVisibility(View.GONE);
+                    }
                     isInGroup = true;
                     break;
                 }
             }
 
-            if(!isInGroup && group.getList().length + 1 == group.getMaxNum()){
+
+            if(!isInGroup && (group.getList().length + 1 == group.getMaxNum() || group.getCompletionDate().compareTo(new Date()) == -1)){
                 joinButton.setVisibility(View.GONE);
                 notificationButton.setVisibility(View.VISIBLE);
             }
@@ -165,6 +179,18 @@ public class GroupDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 quitGroup(group.get_id());
+            }
+        });
+
+        evaluation_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), GroupmateListActivity.class);
+                List<UserForGroup> groupList = new ArrayList<>(Arrays.asList(group.getList()));
+                groupList.add(group.getCreator());
+                intent.putExtra("groupList", (Serializable) groupList);
+                intent.putExtra("groupID", group.get_id());
+                startActivity(intent);
             }
         });
 

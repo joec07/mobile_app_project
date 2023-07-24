@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/turquoise"
+    android:orientation="vertical"
+    tools:context=".GroupmateListActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/goBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#96DED1"
+            android:contentDescription="Back to previous page"
+            android:src="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Peer review page"
+            android:gravity="center"
+            android:layout_alignTop="@id/goBack"
+            android:layout_alignBottom="@id/goBack"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:textColor="@color/charcoal"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/groupmate_ListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="20dp"
+        android:padding="20dp"
+        android:fastScrollEnabled="true"
+        android:scrollbarStyle="outsideInset"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/groupmate_noRecordTextView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/custom_group_item_bg"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="You have completed peer review"
+        android:textColor="@color/charcoal"
+        android:textSize="18dp"
+        android:visibility="gone" />
+
+
+</LinearLayout>

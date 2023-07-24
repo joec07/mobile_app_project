@@ -8,8 +8,7 @@ public class UserForGroup implements Serializable {
     private String introduction;
     private String major;
     private String name;
-    private int[] rating;
-    private int[] ratingGiven;
+    private RatingGiven[] ratingGiven;
     private String email;
     private String _id;
 
@@ -33,11 +32,8 @@ public class UserForGroup implements Serializable {
         return name;
     }
 
-    public int[] getRating() {
-        return rating;
-    }
 
-    public int[] getRatingGiven() {
+    public RatingGiven[] getRatingGiven() {
         return ratingGiven;
     }
 
@@ -51,7 +47,6 @@ public class UserForGroup implements Serializable {
                 "introduction='" + introduction + '\'' +
                 ", major='" + major + '\'' +
                 ", name='" + name + '\'' +
-                ", rating=" + Arrays.toString(rating) +
                 ", ratingGiven=" + Arrays.toString(ratingGiven) +
                 ", email='" + email + '\'' +
                 ", _id='" + _id + '\'' +

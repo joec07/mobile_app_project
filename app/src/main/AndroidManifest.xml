@@ -15,6 +15,12 @@
         android:theme="@style/Theme.COMP7506_testing"
         tools:targetApi="31">
         <activity
+            android:name=".PeerReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GroupmateListActivity"
+            android:exported="false" />
+        <activity
             android:name=".GroupUserDetailActivity"
             android:exported="false" />
         <activity

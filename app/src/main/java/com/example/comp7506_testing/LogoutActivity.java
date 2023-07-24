@@ -24,6 +24,7 @@ public class LogoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LogoutActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }

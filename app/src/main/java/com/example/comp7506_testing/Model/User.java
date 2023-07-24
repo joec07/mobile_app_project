@@ -12,8 +12,8 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String[] group;
-    private int[] rating;
-    private int[] ratingGiven;
+    private Rating[] rating;
+    private RatingGiven[] ratingGiven;
 
     public User() {
 
@@ -83,11 +83,11 @@ public class User implements Serializable {
         return group;
     }
 
-    public int[] getRating() {
+    public Rating[] getRating() {
         return rating;
     }
 
-    public int[] getRatingGiven() {
+    public RatingGiven[] getRatingGiven() {
         return ratingGiven;
     }
 
